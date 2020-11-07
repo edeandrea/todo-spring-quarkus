@@ -16,8 +16,7 @@
 	</properties>
 
 	<dependencies>
-
-		<!-- These dependencies are a hack so we can have a combo Spring Boot/Quarkus app without any code changes -->
+		<!-- These dependencies are a hack for TodoApplication.java, which isn't required for Quarkus. Point of demo is to NOT have any code changes. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot</artifactId>
@@ -30,14 +29,13 @@
 			<version>${spring.version}</version>
 			<optional>true</optional>
 		</dependency>
-
 	</dependencies>
 
 	<profiles>
         <profile>
             <id>spring</id>
             <activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 				<property><name>spring</name></property>
 			</activation>
 			<dependencyManagement>
@@ -74,6 +72,15 @@
 					<version>1.4.8</version>
 				</dependency>
 				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-actuator</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>io.micrometer</groupId>
+					<artifactId>micrometer-registry-prometheus</artifactId>
+					<version>1.6.0</version>
+				</dependency>
+				<dependency>
 					<groupId>io.dekorate</groupId>
 					<artifactId>kubernetes-spring-starter</artifactId>
 					<version>1.0.1</version>
@@ -98,10 +105,12 @@
 				
 			</build>
 		</profile>
-
 		<profile>
             <id>quarkus</id>
-            <activation><property><name>quarkus</name></property></activation>
+            <activation>
+				<property><name>quarkus</name></property>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<properties>
 				<quarkus-plugin.version>1.9.2.Final</quarkus-plugin.version>
 				<quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
@@ -149,6 +158,14 @@
 				<dependency>
 					<groupId>io.quarkus</groupId>
 					<artifactId>quarkus-smallrye-openapi</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>io.quarkus</groupId>
+					<artifactId>quarkus-smallrye-metrics</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>io.quarkus</groupId>
+					<artifactId>quarkus-smallrye-health</artifactId>
 				</dependency>
 				<dependency>
 					<groupId>io.quarkus</groupId>
