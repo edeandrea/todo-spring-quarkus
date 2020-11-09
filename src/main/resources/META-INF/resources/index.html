@@ -1,8 +1,168 @@
 <html>
     <head>
         <title>Todo</title>
+
+        <style type="text/css">
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+html { 
+  background: url(background.jpg); 
+  background-position: 50% 50%;
+  background-size: 1920px 1200px;
+}
+
+body {
+    font-family: 'Raleway', sans-serif;
+    padding-right: 30rem;
+}
+
+input[type="text"] {
+    background: transparent;
+}
+
+body > h1 {
+    text-align: center;
+    margin: 5rem;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: saddlebrown;
+}
+
+label > input[type="checkbox"] {
+  display: none;
+}
+
+label > input[type="checkbox"] + *::before {
+  content: "";
+  display: inline-block;
+  vertical-align: bottom;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 10%;
+  border-style: solid;
+  border-width: 0.1rem;
+  border-color: gray;
+  border-radius: 2rem;
+  margin-right: 0.5rem;
+}
+
+label > input[type="checkbox"]:checked + *::before {
+  content: "✓";
+  line-height: 2rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  background: green;
+  border-color: green;
+}
+label > input[type="checkbox"]:checked + * > input[type="text"] {
+    color: silver;
+    text-decoration: line-through;
+}
+
+.todo:first-child label > input[type="checkbox"] + * > input[type="text"] {
+    border: 1px solid gray;
+    border-radius: 6px;
+    margin-left: 3.1rem;
+}
+
+.todo:first-child label > input[type="checkbox"] + *::before {
+    display: none;
+}
+
+label > input[type="checkbox"] + * > input[type="text"] {
+    line-height: 1.5rem;
+    font-size: 1.5rem;
+    border: 0;
+    margin-bottom: 2px;
+}
+
+.todo {
+    text-align: center;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+        </style>
+
+
     </head>
-    <body>
+<body>
+
+    <h1>Todos in Spring</h1>
+
+    <div class="todos">
+        <form class="todo new-todo" id="todo-1">
+            <label>
+                <input type="checkbox" name="completed">
+                <span>
+                    <input type="text" autocomplete="on" autofocus name="text" required size="40" maxlength="80">
+                </span>
+            </label>
+        </form>
+        <form class="todo" id="todo-2">
+            <label>
+                <input type="checkbox" name="completed">
+                <span>
+                    <input type="text" name="text" required size="40" maxlength="80">
+                </span>
+            </label>
+        </form>
+    </div>
+
+    <footer>
+        <p>
+            <a target="_new" href="/openapi">OpenAPI</a> | 
+            <a target="_new" href="/swagger-ui">Swagger UI</a> | 
+            <a target="_new" href="/actuator/prometheus">Prometheus Metrics</a> | 
+            <a target="_new" href="/actuator/health">Health Check</a>
+        </p>
+    </footer>
+
+<script>
+
+    let myForm = document.getElementById('todo-1');
+
+    var textInput = myForm.elements["text"];
+    var completedInput = myForm.elements["completed"];
+    
+    myForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+    });
+    
+    myForm.addEventListener('formdata', (e) => {
+        e.preventDefault();
+        alert(JSON.stringify(Object.fromEntries(e.formData)));  
+    });
+
+    textInput.addEventListener("keyup", function(e) {
+        e.preventDefault();
+        if (e.keyCode === 13) {
+            new FormData(myForm);
+        }
+    });
+
+    completedInput.addEventListener("click", (e) => {
+        new FormData(myForm);
+    });
+    
+    
+</script>
 
     </body>
 </html>
