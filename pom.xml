@@ -63,10 +63,6 @@
 					<artifactId>postgresql</artifactId>
 				</dependency>
 				<dependency>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-security</artifactId>
-				</dependency>
-				<dependency>
 					<groupId>org.springdoc</groupId>
 					<artifactId>springdoc-openapi-ui</artifactId>
 					<version>1.4.8</version>
@@ -146,14 +142,6 @@
 				<dependency>
 					<groupId>io.quarkus</groupId>
 					<artifactId>quarkus-spring-boot-properties</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>io.quarkus</groupId>
-					<artifactId>quarkus-spring-security</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>io.quarkus</groupId>
-					<artifactId>quarkus-elytron-security-properties-file</artifactId>
 				</dependency>
 				<dependency>
 					<groupId>io.quarkus</groupId>

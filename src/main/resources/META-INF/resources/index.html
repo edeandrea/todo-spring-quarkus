@@ -6,19 +6,15 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
 
-html { 
-  background: url(background.jpg); 
-  background-position: 50% 50%;
-  background-size: 1920px 1200px;
-}
-
 body {
+    background: #222;
     font-family: 'Raleway', sans-serif;
-    padding-right: 30rem;
+    color: white;
 }
 
 input[type="text"] {
     background: transparent;
+    color: white;
 }
 
 body > h1 {
@@ -26,7 +22,7 @@ body > h1 {
     margin: 5rem;
     font-size: 2.5rem;
     font-weight: bold;
-    color: saddlebrown;
+    color: green;
 }
 
 label > input[type="checkbox"] {
@@ -87,7 +83,7 @@ footer {
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: red;
+  background-color: green;
   color: white;
   text-align: center;
   font-weight: bold;
@@ -104,14 +100,14 @@ footer a {
     </head>
 <body>
 
-    <h1>Todos in Spring</h1>
+    <h1>Spring Todos</h1>
 
     <div class="todos">
         <form class="todo new-todo" id="todo-1">
             <label>
                 <input type="checkbox" name="completed">
                 <span>
-                    <input type="text" autocomplete="on" autofocus name="text" required size="40" maxlength="80">
+                    <input type="text" name="title" required size="40" maxlength="80">
                 </span>
             </label>
         </form>
@@ -119,7 +115,7 @@ footer a {
             <label>
                 <input type="checkbox" name="completed">
                 <span>
-                    <input type="text" name="text" required size="40" maxlength="80">
+                    <input type="text" name="title" required size="40" maxlength="80">
                 </span>
             </label>
         </form>
@@ -138,7 +134,7 @@ footer a {
 
     let myForm = document.getElementById('todo-1');
 
-    var textInput = myForm.elements["text"];
+    var titleInput = myForm.elements["title"];
     var completedInput = myForm.elements["completed"];
     
     myForm.addEventListener('submit', (e) => {
@@ -150,7 +146,7 @@ footer a {
         alert(JSON.stringify(Object.fromEntries(e.formData)));  
     });
 
-    textInput.addEventListener("keyup", function(e) {
+    titleInput.addEventListener("keyup", function(e) {
         e.preventDefault();
         if (e.keyCode === 13) {
             new FormData(myForm);
