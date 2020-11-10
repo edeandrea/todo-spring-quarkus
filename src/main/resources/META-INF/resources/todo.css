@@ -51,13 +51,13 @@ label > input[type="checkbox"]:checked + * > input[type="text"] {
     text-decoration: line-through;
 }
 
-.todo:first-child label > input[type="checkbox"] + * > input[type="text"] {
+todo-component:first-child label > input[type="checkbox"] + * > input[type="text"] {
     border: 1px solid gray;
     border-radius: 6px;
     margin-left: 3.1rem;
 }
 
-.todo:first-child label > input[type="checkbox"] + *::before {
+todo-component:first-child label > input[type="checkbox"] + *::before {
     display: none;
 }
 
@@ -68,7 +68,7 @@ label > input[type="checkbox"] + * > input[type="text"] {
     margin-bottom: 2px;
 }
 
-.todo {
+todo-component {
     text-align: center;
 }
 

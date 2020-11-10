@@ -25,9 +25,9 @@ window.customElements.define('todo-component',
             this.setAttribute('completed', '');
         }
         */
-       
-        constructor() {
-            super();
+
+       connectedCallback() {
+            var todo = this;
 
             this.innerHTML = '\
                 <form>\
@@ -56,6 +56,8 @@ window.customElements.define('todo-component',
             titleInput.addEventListener("keyup", function(e) {
                 e.preventDefault();
                 if (e.keyCode === 13) {
+                    var newTodo = document.createElement("todo-component");
+                    todo.parentElement.prepend(newTodo);
                     new FormData(form);
                 }
             });
