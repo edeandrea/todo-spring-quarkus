@@ -1,65 +1,22 @@
-/*
-let myForm = document.getElementById('todo-1');
 
-var titleInput = myForm.elements["title"];
-var completedInput = myForm.elements["completed"];
+document.addEventListener("DOMContentLoaded", function(){
+    fetch('/todo')
+    .then(response => response.json())
+    .then(arr => {
+        var todos = document.getElementsByClassName("todos")[0];
 
-myForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+        arr.forEach(element => {
+            var todoEle = document.createElement("todo-component");
+            todoEle.setAttribute("id", element.id);
+            todoEle.setAttribute("title", element.title);
+            if(element.completed == true) {
+                todoEle.setAttribute("completed", 'on');
+            }
+            
+            todos.appendChild(todoEle);
+            console.log(todoEle);
+
+            var appendedTodo =  document.getElementById("todo-" + element.id);
+        });
+    });
 });
-
-myForm.addEventListener('formdata', (e) => {
-    e.preventDefault();
-    alert(JSON.stringify(Object.fromEntries(e.formData)));  
-});
-
-titleInput.addEventListener("keyup", function(e) {
-    e.preventDefault();
-    if (e.keyCode === 13) {
-        new FormData(myForm);
-    }
-});
-
-completedInput.addEventListener("click", (e) => {
-    new FormData(myForm);
-});
-
-fetch('/todo')
-.then(response => response.json())
-.then(data => alert("1 " + data));
-
-var data = {
-    "title": "New todo"
-}
-
-fetch('/todo', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(data)
-})
-.then(response => response.json())
-.then(data => alert("2 " + data));
-
-fetch('/todo/1')
-.then(response => response.json())
-.then(data => alert("3 " + data));
-
-data = {
-    "id": 2,
-    "title": "New todo",
-    "completed": true
-}
-
-fetch('/todo', {
-    method: 'PUT',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(data)
-})
-.then(response => alert("4"));
-
-
-fetch('/todo/1', {
-    method: 'DELETE'
-})
-.then(response => alert("4"));  
-*/

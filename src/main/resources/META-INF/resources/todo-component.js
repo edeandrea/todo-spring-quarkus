@@ -1,30 +1,5 @@
 window.customElements.define('todo-component', 
     class extends HTMLElement {
-        /*
-        get id() {
-            return this.hasAttribute('id');
-        }
-
-        set id(val) {
-            this.setAttribute('id', '');
-        }
-
-        get title() {
-            return this.hasAttribute('title');
-        }
-
-        set title(val) {
-            this.setAttribute('title', '');
-        }
-
-        get completed() {
-            return this.hasAttribute('title');
-        }
-
-        set completed(val) {
-            this.setAttribute('completed', '');
-        }
-        */
 
        connectedCallback() {
             var todo = this;
@@ -32,6 +7,7 @@ window.customElements.define('todo-component',
             this.innerHTML = '\
                 <form>\
                     <label>\
+                        <input type="hidden" name="id">\
                         <input type="checkbox" name="completed">\
                         <span>\
                             <input type="text" name="title" required size="40" maxlength="80">\
@@ -41,29 +17,61 @@ window.customElements.define('todo-component',
             ';
 
             var form = this.getElementsByTagName("form")[0];
+            var idInput = form.elements["id"];
             var titleInput = form.elements["title"];
             var completedInput = form.elements["completed"];
+
+            // Populate component with any existing values upon load
+            idInput.value = this.getAttribute('id');
+            titleInput.value = this.getAttribute('title');
+            if(this.getAttribute('completed') == 'on') {
+                completedInput.checked = 'on';
+            }
             
+            titleInput.addEventListener("keyup", function(e) {
+                e.preventDefault();
+                if (e.keyCode === 13) {
+                    new FormData(form);
+                }
+            });
+
+            completedInput.addEventListener("click", (e) => {
+                new FormData(form);
+            });
+
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
             });
             
             form.addEventListener('formdata', (e) => {
                 e.preventDefault();
-                alert(JSON.stringify(Object.fromEntries(e.formData)));  
-            });
-            
-            titleInput.addEventListener("keyup", function(e) {
-                e.preventDefault();
-                if (e.keyCode === 13) {
+                var data = Object.fromEntries(e.formData);
+
+                if(data.id == '') { // New Todo
+                    fetch('/todo', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(data)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        idInput.value = data.id;
+                        console.log("Added: " + JSON.stringify(data));
+                    });
+
                     var newTodo = document.createElement("todo-component");
                     todo.parentElement.prepend(newTodo);
-                    new FormData(form);
                 }
-            });
-            
-            completedInput.addEventListener("click", (e) => {
-                new FormData(form);
+                else { // Update Todo
+                    // Convert completed to boolean value
+                    (data.completed == 'on') ? data.completed = true : data.completed = false;
+
+                    fetch('/todo', {
+                        method: 'PUT',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(data)
+                    });
+                }
             });
         }
     });
