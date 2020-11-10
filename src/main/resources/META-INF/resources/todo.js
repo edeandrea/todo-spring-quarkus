@@ -12,11 +12,7 @@ document.addEventListener("DOMContentLoaded", function(){
             if(element.completed == true) {
                 todoEle.setAttribute("completed", 'on');
             }
-            
             todos.appendChild(todoEle);
-            console.log(todoEle);
-
-            var appendedTodo =  document.getElementById("todo-" + element.id);
         });
     });
 });
