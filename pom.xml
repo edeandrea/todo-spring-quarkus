@@ -35,7 +35,7 @@
         <profile>
             <id>spring</id>
             <activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 				<property><name>spring</name></property>
 			</activation>
 			<dependencyManagement>
@@ -105,7 +105,7 @@
             <id>quarkus</id>
             <activation>
 				<property><name>quarkus</name></property>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<properties>
 				<quarkus-plugin.version>1.9.2.Final</quarkus-plugin.version>
