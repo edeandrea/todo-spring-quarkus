@@ -1,0 +1,9 @@
+def buildProfile = hasProperty('profile') ? getProperty('profile') : 'spring'
+def buildFile = "build-${buildProfile}.gradle"
+
+if (!file(buildFile).exists()) {
+	throw new GradleException("Build file $buildFile for profile $buildProfile does not exist")
+}
+
+rootProject.name = 'todo-spring-quarkus'
+rootProject.buildFileName = buildFile
