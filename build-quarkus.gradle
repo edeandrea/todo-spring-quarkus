@@ -1,0 +1,44 @@
+plugins {
+	id 'java'
+	id 'io.quarkus' version '1.9.2.Final'
+}
+
+apply from: 'build-common.gradle'
+
+ext {
+	quarkusVersion = '1.9.2.Final'
+	springVersion = '2.3.4.RELEASE'
+}
+
+compileJava {
+	options.encoding = 'UTF-8'
+	options.compilerArgs << '-parameters'
+}
+
+compileTestJava {
+	options.encoding = 'UTF-8'
+}
+
+dependencies {
+	// This dependency is a hack for TodoApplication.java, which isn't required for Quarkus. Point of demo is to NOT have any code changes.
+	// It won't actually be included in the binary that gets built (compileOnly configuration)
+	compileOnly "org.springframework.boot:spring-boot-autoconfigure:$springVersion"
+	implementation enforcedPlatform("io.quarkus:quarkus-universe-bom:$quarkusVersion")
+	implementation 'io.quarkus:quarkus-spring-web'
+	implementation 'io.quarkus:quarkus-spring-data-jpa'
+	implementation 'io.quarkus:quarkus-spring-boot-properties'
+	implementation 'io.quarkus:quarkus-smallrye-openapi'
+	implementation 'io.quarkus:quarkus-smallrye-health'
+	implementation 'io.quarkus:quarkus-smallrye-metrics'
+//	implementation 'io.quarkus:quarkus-kubernetes'
+	implementation 'io.quarkus:quarkus-jdbc-postgresql'
+	testImplementation 'io.quarkus:quarkus-junit5'
+	testImplementation 'io.rest-assured:rest-assured'
+}
+
+quarkusBuild {
+	nativeArgs {
+		containerBuild = true
+		buildImage = "quay.io/quarkus/ubi-quarkus-native-image:20.2.0-java11"
+	}
+}

@@ -7,3 +7,21 @@ docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 --name tod
 ```
 
 alias mvnw='.mvn'
+
+Also added Gradle support
+
+To run as Spring:
+```
+./gradlew clean bootRun
+```
+
+OR
+
+```
+./gradlew -Pprofile=spring clean bootRun
+```
+
+To run as Quarkus:
+```
+./gradlew -Pprofile=quarkus clean quarkusDev
+```
