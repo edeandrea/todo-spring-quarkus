@@ -51,6 +51,16 @@ label > input[type="checkbox"]:checked + * > input[type="text"] {
     text-decoration: line-through;
 }
 
+label > input[type="checkbox"] + * > button {
+    visibility: hidden;
+}
+
+label > input[type="checkbox"]:checked + * > button {
+    background: none;
+    border: none;
+    visibility: visible;
+}
+
 todo-component:first-child label > input[type="checkbox"] + * > input[type="text"] {
     border: 1px solid gray;
     border-radius: 6px;

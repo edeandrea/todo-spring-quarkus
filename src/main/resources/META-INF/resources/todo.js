@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function(){
     fetch('/todo')
     .then(response => response.json())
     .then(arr => {
-        var todos = document.getElementsByClassName("todos")[0];
+        var todos = document.getElementById("todos");
 
         arr.forEach(element => {
             var todoEle = document.createElement("todo-component");
@@ -14,5 +14,8 @@ document.addEventListener("DOMContentLoaded", function(){
             }
             todos.appendChild(todoEle);
         });
+    })
+    .catch(err => {
+        console.error(err);
     });
 });

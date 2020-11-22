@@ -11,6 +11,7 @@ window.customElements.define('todo-component',
                         <input type="checkbox" name="completed">\
                         <span>\
                             <input type="text" name="title" required size="40" maxlength="80">\
+                            <button type="button" name="delete">&#x274C;</button>\
                         </span>\
                     </label>\
                 </form>\
@@ -20,13 +21,24 @@ window.customElements.define('todo-component',
             var idInput = form.elements["id"];
             var titleInput = form.elements["title"];
             var completedInput = form.elements["completed"];
+            var deleteButton = form.elements["delete"];
 
             // Populate component with any existing values upon load
             idInput.value = this.getAttribute('id');
             titleInput.value = this.getAttribute('title');
+
             if(this.getAttribute('completed') == 'on') {
                 completedInput.checked = 'on';
             }
+
+            deleteButton.addEventListener("click", function(e) {
+                fetch('/todo/' + idInput.value, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    todo.remove();
+                });
+            });
             
             titleInput.addEventListener("keyup", function(e) {
                 e.preventDefault();
