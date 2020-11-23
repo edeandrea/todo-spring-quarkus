@@ -73,6 +73,7 @@ class TodoComponent extends HTMLElement {
             e.preventDefault();
             if (e.keyCode === 13) {
                 new FormData(todo.form);
+                e.target.blur();
             }
         });
 
