@@ -1,7 +1,7 @@
 <style>
     input[type="text"] {
         background: transparent;
-        color: white;
+        color: var(--todo-text-color);
     }
 
     label > input[type="checkbox"] {
@@ -26,10 +26,10 @@
         content: "✓";
         line-height: 2rem;
         font-weight: bold;
-        color: white;
+        color: var(--todo-text-color);
         text-align: center;
-        background: var(--main-accent-color);;
-        border-color: var(--main-accent-color);;
+        background: var(--main-accent-color);
+        border-color: var(--main-accent-color);
     }
 
     label > input[type="checkbox"]:checked + * > input[type="text"] {

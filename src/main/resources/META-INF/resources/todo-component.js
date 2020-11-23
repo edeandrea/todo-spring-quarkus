@@ -24,17 +24,21 @@ class TodoComponent extends HTMLElement {
         this.set('checked','completed',val)
     }
 
+    // Get the property from either the attribute or the form field
     get(prop, name) {
         const ele = this.form.elements[name];
         if (ele[prop] == '') {
-            ele[prop] = this.getAttribute(name);
+            if(this.getAttribute(name) != null) {
+                ele[prop] = decodeURI(this.getAttribute(name));
+            }
         }
         return ele[prop];
     }
 
+    // Set the property to the attribute and the form field
     set(prop, name, val) {
         this.form.elements[name][prop] = val;
-        this.setAttribute(name, val);
+        this.setAttribute(name, encodeURI(val));
     }
 
     constructor() {
@@ -55,6 +59,7 @@ class TodoComponent extends HTMLElement {
         const todo = this;
         this.form = this.shadowRoot.querySelector('form');
 
+        // Initialize the form fields by calling the getters
         this.id;
         this.title;
         this.completed;
@@ -88,7 +93,6 @@ class TodoComponent extends HTMLElement {
         this.form.addEventListener('formdata', (e) => {
             e.preventDefault();
             const data = Object.fromEntries(e.formData);
-            data.title = encodeURI(data.title);
 
             todo.title = data.title;
             todo.completed = data.completed;
