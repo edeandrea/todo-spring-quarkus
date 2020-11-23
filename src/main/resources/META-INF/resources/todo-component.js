@@ -1,5 +1,42 @@
 class TodoComponent extends HTMLElement {
 
+    get id() {
+        return this.get('value','id');
+    }
+
+    set id(id) {
+        this.set('value','id',id)
+    }
+
+    get title() {
+        return this.get('value','title');
+    }
+
+    set title(title) {
+        this.set('value','title',title)
+    }
+
+    get completed() {
+        return this.get('checked','completed');
+    }
+
+    set completed(val) {
+        this.set('checked','completed',val)
+    }
+
+    get(prop, name) {
+        const ele = this.form.elements[name];
+        if (ele[prop] == '') {
+            ele[prop] = this.getAttribute(name);
+        }
+        return ele[prop];
+    }
+
+    set(prop, name, val) {
+        this.form.elements[name][prop] = val;
+        this.setAttribute(name, val);
+    }
+
     constructor() {
         super();
         this.attachShadow({mode: 'open'});
@@ -7,40 +44,23 @@ class TodoComponent extends HTMLElement {
         fetch('./todo-component.html')
         .then(stream => stream.text())
         .then(html => {
-            let tmpl = document.createElement('template');
+            const tmpl = document.createElement('template');
             tmpl.innerHTML = html;
-            console.log(html);
             this.shadowRoot.appendChild(tmpl.content.cloneNode(true));
-            this.attachEvents();
+            this.initialize();
         });
     }
 
-    attachEvents() {
+    initialize() {
         const todo = this;
-        const form = this.shadowRoot.querySelector('form');
-        const idInput = form.elements['id'];
-        const titleInput = form.elements['title'];
-        const completedInput = form.elements['completed'];
-        const deleteButton = form.elements['delete'];
+        this.form = this.shadowRoot.querySelector('form');
 
-        // Populate component with any existing values upon load
-        idInput.value = this.getAttribute('id');
+        this.id;
+        this.title;
+        this.completed;
 
-        const escapedTitle = decodeURI(this.getAttribute('title'));
-        if(escapedTitle != 'null') {
-            titleInput.value = escapedTitle;
-        }
-
-        if(this.getAttribute('completed') == 'on') {
-            completedInput.checked = 'on';
-        }
-
-        // The attributes are no longer useful, as the state is maintained internally
-        this.removeAttribute('title');
-        this.removeAttribute('completed');
-
-        deleteButton.addEventListener('click', function(e) {
-            fetch('/todo/' + idInput.value, {
+        this.form.elements['delete'].addEventListener('click', function(e) {
+            fetch('/todo/' + todo.id, {
                 method: 'DELETE'
             })
             .then(response => {
@@ -49,25 +69,28 @@ class TodoComponent extends HTMLElement {
             .catch(err => console.error(err));
         });
         
-        titleInput.addEventListener('keyup', function(e) {
+        this.form.elements['title'].addEventListener('keyup', function(e) {
             e.preventDefault();
             if (e.keyCode === 13) {
-                new FormData(form);
+                new FormData(todo.form);
             }
         });
 
-        completedInput.addEventListener('click', (e) => {
-            new FormData(form);
+        this.form.elements['completed'].addEventListener('click', (e) => {
+            new FormData(todo.form);
         });
 
-        form.addEventListener('submit', (e) => {
+        this.form.addEventListener('submit', (e) => {
             e.preventDefault();
         });
         
-        form.addEventListener('formdata', (e) => {
+        this.form.addEventListener('formdata', (e) => {
             e.preventDefault();
             const data = Object.fromEntries(e.formData);
             data.title = encodeURI(data.title);
+
+            todo.title = data.title;
+            todo.completed = data.completed;
 
             if(data.id == '') { // New Todo
                 fetch('/todo', {
@@ -77,7 +100,7 @@ class TodoComponent extends HTMLElement {
                 })
                 .then(response => response.json())
                 .then(data => {
-                    idInput.value = data.id;
+                    todo.id = data.id;
                     console.log('Added: ' + JSON.stringify(data));
                 })
                 .catch(err => console.error(err));
@@ -88,7 +111,6 @@ class TodoComponent extends HTMLElement {
             else { // Update Todo
                 // Convert completed to boolean value
                 (data.completed == 'on') ? data.completed = true : data.completed = false;
-
                 fetch('/todo', {
                     method: 'PUT',
                     headers: {'Content-Type': 'application/json'},

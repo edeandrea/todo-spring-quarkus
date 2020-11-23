@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function(){
             todoEle.setAttribute("id", element.id);
             todoEle.setAttribute("title", element.title);
             if(element.completed == true) {
-                todoEle.setAttribute("completed", 'on');
+                todoEle.setAttribute("completed", 'true');
             }
             todos.appendChild(todoEle);
         });
