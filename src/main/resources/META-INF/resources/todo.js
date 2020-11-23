@@ -15,7 +15,5 @@ document.addEventListener("DOMContentLoaded", function(){
             todos.appendChild(todoEle);
         });
     })
-    .catch(err => {
-        console.error(err);
-    });
+    .catch(err => console.error(err));
 });

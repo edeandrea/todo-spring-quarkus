@@ -6,76 +6,12 @@ body {
     color: white;
 }
 
-input[type="text"] {
-    background: transparent;
-    color: white;
-}
-
 body > h1 {
     text-align: center;
     margin: 5rem;
     font-size: 2.5rem;
     font-weight: bold;
     color: green;
-}
-
-label > input[type="checkbox"] {
-  display: none;
-}
-
-label > input[type="checkbox"] + *::before {
-  content: "";
-  display: inline-block;
-  vertical-align: bottom;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 10%;
-  border-style: solid;
-  border-width: 0.1rem;
-  border-color: gray;
-  border-radius: 2rem;
-  margin-right: 0.5rem;
-}
-
-label > input[type="checkbox"]:checked + *::before {
-  content: "✓";
-  line-height: 2rem;
-  font-weight: bold;
-  color: white;
-  text-align: center;
-  background: green;
-  border-color: green;
-}
-label > input[type="checkbox"]:checked + * > input[type="text"] {
-    color: silver;
-    text-decoration: line-through;
-}
-
-label > input[type="checkbox"] + * > button {
-    visibility: hidden;
-}
-
-label > input[type="checkbox"]:checked + * > button {
-    background: none;
-    border: none;
-    visibility: visible;
-}
-
-todo-component:first-child label > input[type="checkbox"] + * > input[type="text"] {
-    border: 1px solid gray;
-    border-radius: 6px;
-    margin-left: 3.1rem;
-}
-
-todo-component:first-child label > input[type="checkbox"] + *::before {
-    display: none;
-}
-
-label > input[type="checkbox"] + * > input[type="text"] {
-    line-height: 1.5rem;
-    font-size: 1.5rem;
-    border: 0;
-    margin-bottom: 2px;
 }
 
 todo-component {
