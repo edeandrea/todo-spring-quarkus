@@ -1,14 +1,14 @@
-window.customElements.define('todo-component', 
-    class extends HTMLElement {
+"use strict";
 
-        constructor() {
-            super();
-            this.shadow = this.attachShadow({mode: 'open'});
+class TodoComponent extends HTMLElement {
 
-            let tmpl = document.createElement('template');
-            tmpl.innerHTML = `
-            <style>
+    constructor() {
+        super();
+        this.shadow = this.attachShadow({mode: 'open'});
 
+        let tmpl = document.createElement('template');
+        tmpl.innerHTML = `
+        <style>
             input[type="text"] {
                 background: transparent;
                 color: white;
@@ -17,7 +17,7 @@ window.customElements.define('todo-component',
             label > input[type="checkbox"] {
                 display: none;
             }
-              
+                
             label > input[type="checkbox"] + *::before {
                 content: "";
                 display: inline-block;
@@ -31,7 +31,7 @@ window.customElements.define('todo-component',
                 border-radius: 2rem;
                 margin-right: 0.5rem;
             }
-              
+                
             label > input[type="checkbox"]:checked + *::before {
                 content: "✓";
                 line-height: 2rem;
@@ -46,18 +46,18 @@ window.customElements.define('todo-component',
                 color: silver;
                 text-decoration: line-through;
             }
-              
+                
             label > input[type="checkbox"] + * > button {
                 visibility: hidden;
             }
-              
+                
             label > input[type="checkbox"]:checked + * > button {
                 visibility: visible;
                 background: none;
                 border: none;
                 font-size: 1.3rem
             }
-              
+                
             label > input[type="checkbox"] + * > input[type="text"] {
                 line-height: 1.5rem;
                 font-size: 1.5rem;
@@ -74,102 +74,104 @@ window.customElements.define('todo-component',
             :host(:first-of-type) label > input[type="checkbox"] + *::before {
                 display: none;
             }
-            </style>
-            <form>
-                <label>
-                    <input type="hidden" name="id">
-                    <input type="checkbox" name="completed">
-                    <span>
-                        <input type="text" name="title" required size="40" maxlength="80">
-                        <button type="button" name="delete">&#x274C;</button>
-                    </span>
-                </label>
-            </form>`;
+        </style>
+        <form>
+            <label>
+                <input type="hidden" name="id">
+                <input type="checkbox" name="completed">
+                <span>
+                    <input type="text" name="title" required size="40" maxlength="80">
+                    <button type="button" name="delete">&#x274C;</button>
+                </span>
+            </label>
+        </form>`;
 
-            this.shadow.appendChild(tmpl.content.cloneNode(true));
+        this.shadow.appendChild(tmpl.content.cloneNode(true));
+    }
+
+    connectedCallback() {
+        const todo = this;
+        const form = this.shadow.querySelector('form');
+        const idInput = form.elements['id'];
+        const titleInput = form.elements['title'];
+        const completedInput = form.elements['completed'];
+        const deleteButton = form.elements['delete'];
+
+        // Populate component with any existing values upon load
+        idInput.value = this.getAttribute('id');
+
+        const escapedTitle = decodeURI(this.getAttribute('title'));
+        if(escapedTitle != 'null') {
+            titleInput.value = escapedTitle;
         }
 
-        connectedCallback() {
-            const todo = this;
-            const form = this.shadow.querySelector('form');
-            const idInput = form.elements['id'];
-            const titleInput = form.elements['title'];
-            const completedInput = form.elements['completed'];
-            const deleteButton = form.elements['delete'];
+        if(this.getAttribute('completed') == 'on') {
+            completedInput.checked = 'on';
+        }
 
-            // Populate component with any existing values upon load
-            idInput.value = this.getAttribute('id');
+        // The attributes are no longer useful, as the state is maintained internally
+        this.removeAttribute('title');
+        this.removeAttribute('completed');
 
-            const escapedTitle = decodeURI(this.getAttribute('title'));
-            if(escapedTitle != 'null') {
-                titleInput.value = escapedTitle;
+        deleteButton.addEventListener('click', function(e) {
+            fetch('/todo/' + idInput.value, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                todo.remove();
+            })
+            .catch(err => console.error(err));
+        });
+        
+        titleInput.addEventListener('keyup', function(e) {
+            e.preventDefault();
+            if (e.keyCode === 13) {
+                new FormData(form);
             }
+        });
 
-            if(this.getAttribute('completed') == 'on') {
-                completedInput.checked = 'on';
-            }
+        completedInput.addEventListener('click', (e) => {
+            new FormData(form);
+        });
 
-            // The attributes are no longer useful, as the state is maintained internally
-            this.removeAttribute('title');
-            this.removeAttribute('completed');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+        });
+        
+        form.addEventListener('formdata', (e) => {
+            e.preventDefault();
+            const data = Object.fromEntries(e.formData);
+            data.title = encodeURI(data.title);
 
-            deleteButton.addEventListener('click', function(e) {
-                fetch('/todo/' + idInput.value, {
-                    method: 'DELETE'
+            if(data.id == '') { // New Todo
+                fetch('/todo', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
                 })
-                .then(response => {
-                    todo.remove();
+                .then(response => response.json())
+                .then(data => {
+                    idInput.value = data.id;
+                    console.log('Added: ' + JSON.stringify(data));
                 })
                 .catch(err => console.error(err));
-            });
-            
-            titleInput.addEventListener('keyup', function(e) {
-                e.preventDefault();
-                if (e.keyCode === 13) {
-                    new FormData(form);
-                }
-            });
 
-            completedInput.addEventListener('click', (e) => {
-                new FormData(form);
-            });
+                var newTodo = document.createElement('todo-component');
+                todo.parentElement.prepend(newTodo);
+            }
+            else { // Update Todo
+                // Convert completed to boolean value
+                (data.completed == 'on') ? data.completed = true : data.completed = false;
 
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-            });
-            
-            form.addEventListener('formdata', (e) => {
-                e.preventDefault();
-                const data = Object.fromEntries(e.formData);
-                data.title = encodeURI(data.title);
+                fetch('/todo', {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                })
+                .catch(err => console.error(err));
+            }
+        });
+    }
+}
 
-                if(data.id == '') { // New Todo
-                    fetch('/todo', {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify(data)
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        idInput.value = data.id;
-                        console.log('Added: ' + JSON.stringify(data));
-                    })
-                    .catch(err => console.error(err));
-
-                    var newTodo = document.createElement('todo-component');
-                    todo.parentElement.prepend(newTodo);
-                }
-                else { // Update Todo
-                    // Convert completed to boolean value
-                    (data.completed == 'on') ? data.completed = true : data.completed = false;
-
-                    fetch('/todo', {
-                        method: 'PUT',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify(data)
-                    })
-                    .catch(err => console.error(err));
-                }
-            });
-        }
-    });
+window.customElements.define('todo-component', TodoComponent);
