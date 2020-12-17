@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.quarkus</groupId>
 	<artifactId>todo-spring-quarkus</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>todo-spring-quarkus</name>
 	<description>A Todo application that builds and runs as either Spring Boot or Quarkus!</description>
-
 	<properties>
 		<java.version>11</java.version>
 		<maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-		<spring.version>2.3.4.RELEASE</spring.version>
+		<maven.compiler.target>11</maven.compiler.target>
+		<spring.version>2.4.1</spring.version>
 	</properties>
-
 	<dependencies>
 		<!-- These dependencies are a hack for TodoApplication.java, which isn't required for Quarkus. Point of demo is to NOT have any code changes. -->
 		<dependency>
@@ -30,13 +27,14 @@
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
-
 	<profiles>
-        <profile>
-            <id>spring</id>
-            <activation>
+		<profile>
+			<id>spring</id>
+			<activation>
 				<activeByDefault>true</activeByDefault>
-				<property><name>spring</name></property>
+				<property>
+					<name>spring</name>
+				</property>
 			</activation>
 			<dependencyManagement>
 				<dependencies>
@@ -61,11 +59,12 @@
 				<dependency>
 					<groupId>org.postgresql</groupId>
 					<artifactId>postgresql</artifactId>
+					<scope>runtime</scope>
 				</dependency>
 				<dependency>
 					<groupId>org.springdoc</groupId>
 					<artifactId>springdoc-openapi-ui</artifactId>
-					<version>1.4.8</version>
+					<version>1.5.1</version>
 				</dependency>
 				<dependency>
 					<groupId>org.springframework.boot</groupId>
@@ -74,7 +73,6 @@
 				<dependency>
 					<groupId>io.micrometer</groupId>
 					<artifactId>micrometer-registry-prometheus</artifactId>
-					<version>1.6.0</version>
 				</dependency>
 				<dependency>
 					<groupId>io.dekorate</groupId>
@@ -94,24 +92,29 @@
 						<artifactId>spring-boot-maven-plugin</artifactId>
 						<!-- Needed when not using Spring Boot parent POM -->
 						<executions>
-							<execution><goals><goal>repackage</goal></goals></execution>
+							<execution>
+								<goals>
+									<goal>repackage</goal>
+								</goals>
+							</execution>
 						</executions>
 					</plugin>
 				</plugins>
-				
 			</build>
 		</profile>
 		<profile>
-            <id>quarkus</id>
-            <activation>
-				<property><name>quarkus</name></property>
+			<id>quarkus</id>
+			<activation>
+				<property>
+					<name>quarkus</name>
+				</property>
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<properties>
-				<quarkus-plugin.version>1.9.2.Final</quarkus-plugin.version>
+				<quarkus-plugin.version>1.10.5.Final</quarkus-plugin.version>
 				<quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
 				<quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-				<quarkus.platform.version>1.9.2.Final</quarkus.platform.version>
+				<quarkus.platform.version>1.10.5.Final</quarkus.platform.version>
 				<compiler-plugin.version>3.8.1</compiler-plugin.version>
 				<surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
 			</properties>
@@ -195,50 +198,52 @@
 				</plugins>
 			</build>
 		</profile>
-
-        <profile>
-            <id>quarkus-native</id>
-            <activation><property><name>quarkus-native</name></property></activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>io.quarkus</groupId>
-                        <artifactId>quarkus-maven-plugin</artifactId>
-                        <version>${quarkus-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>native-image</goal>
-                                </goals>
-                                <configuration>
-                                    <enableHttpUrlHandler>true</enableHttpUrlHandler>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-failsafe-plugin</artifactId>
-                        <version>${surefire-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>integration-test</goal>
-                                    <goal>verify</goal>
-                                </goals>
-                                <configuration>
-                                    <systemPropertyVariables>
-                                        <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
-                                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-                                        <maven.home>${maven.home}</maven.home>
-                                    </systemPropertyVariables>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
+		<profile>
+			<id>quarkus-native</id>
+			<activation>
+				<property>
+					<name>quarkus-native</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>io.quarkus</groupId>
+						<artifactId>quarkus-maven-plugin</artifactId>
+						<version>${quarkus-plugin.version}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>native-image</goal>
+								</goals>
+								<configuration>
+									<enableHttpUrlHandler>true</enableHttpUrlHandler>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<version>${surefire-plugin.version}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>integration-test</goal>
+									<goal>verify</goal>
+								</goals>
+								<configuration>
+									<systemPropertyVariables>
+										<native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+										<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+										<maven.home>${maven.home}</maven.home>
+									</systemPropertyVariables>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
