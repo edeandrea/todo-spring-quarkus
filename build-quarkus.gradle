@@ -1,13 +1,13 @@
 plugins {
 	id 'java'
-	id 'io.quarkus' version '1.9.2.Final'
+	id 'io.quarkus' version '1.10.5.Final'
 }
 
 apply from: 'build-common.gradle'
 
 ext {
-	quarkusVersion = '1.9.2.Final'
-	springVersion = '2.3.4.RELEASE'
+	quarkusVersion = '1.10.5.Final'
+	springVersion = '2.4.1'
 }
 
 compileJava {
@@ -29,9 +29,10 @@ dependencies {
 	implementation 'io.quarkus:quarkus-spring-boot-properties'
 	implementation 'io.quarkus:quarkus-smallrye-openapi'
 	implementation 'io.quarkus:quarkus-smallrye-health'
-	implementation 'io.quarkus:quarkus-smallrye-metrics'
-//	implementation 'io.quarkus:quarkus-kubernetes'
-	implementation 'io.quarkus:quarkus-jdbc-postgresql'
+	implementation 'io.quarkus:quarkus-micrometer'
+	implementation 'io.quarkus:quarkus-kubernetes'
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+	runtimeOnly 'io.quarkus:quarkus-jdbc-postgresql'
 	testImplementation 'io.quarkus:quarkus-junit5'
 	testImplementation 'io.rest-assured:rest-assured'
 }
