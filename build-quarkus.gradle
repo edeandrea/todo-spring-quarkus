@@ -42,3 +42,5 @@ quarkusBuild {
 		buildImage = "quay.io/quarkus/ubi-quarkus-native-image:20.2.0-java11"
 	}
 }
+
+task bootRun(dependsOn: 'quarkusDev')
