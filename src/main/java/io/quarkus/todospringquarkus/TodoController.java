@@ -27,7 +27,7 @@ public class TodoController {
         return todoRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
  
-    @GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
     public TodoEntity findById(@PathVariable("id") Long id) {
         return todoRepository.findById(id).get();
     }
@@ -44,7 +44,7 @@ public class TodoController {
         return todoRepository.save(resource);
     }
  
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping("/{id}")
     @Transactional
     public void delete(@PathVariable("id") Long id) {
         todoRepository.deleteById(id);
