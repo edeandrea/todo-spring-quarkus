@@ -1,2 +1,2 @@
 #!/bin/sh
-mvn clean quarkus:dev -Pquarkus
+./mvnw clean quarkus:dev -Pquarkus
