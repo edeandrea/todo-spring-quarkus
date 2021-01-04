@@ -13,6 +13,7 @@
 		<spring.version>2.4.1</spring.version>
 	</properties>
 	<dependencies>
+		<!-- This dependency is a hack for TodoApplication.java, which isn't required for Quarkus. Point of demo is to NOT have any code changes. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-autoconfigure</artifactId>
