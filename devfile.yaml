@@ -45,13 +45,13 @@ commands:
     actions:
       - workdir: '${CHE_PROJECTS_ROOT}/todo-spring-quarkus'
         type: exec
-        command: './mvnw clean spring-boot:run'
+        command: './gradlew clean bootRun'
         component: todo-application
   - name: 2. Run as Quarkus
     actions:
       - workdir: '${CHE_PROJECTS_ROOT}/todo-spring-quarkus'
         type: exec
-        command: './.mvnw clean spring-boot:run'
+        command: './.gradlew clean bootRun'
         component: todo-application
   - name: Attach remote debugger
     actions:
