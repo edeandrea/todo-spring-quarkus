@@ -86,7 +86,7 @@ target/io.quarkus.todospringquarkus.todoapplication
 - **RSS memory usage after 1st request:** 146.5 MB
 
 ### Results Summary
-#### VM - Equivalent functionality in both Quarkus & Spring
+#### JVM - Equivalent functionality in both Quarkus & Spring
 
 | Metric | Quarkus | Spring Boot |
 | ------ | ------- | ----------- |
