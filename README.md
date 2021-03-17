@@ -50,7 +50,7 @@ target/todo-spring-quarkus-0.0.1-SNAPSHOT-runner
 - **Native Image Size:** 72 MB
 - **Native Image Boot Time:** 0.091 seconds
 - **Boot RSS memory usage:** 31.4 MB
-- **1st request RSS memory usage:** 38.1 MB
+- **RSS memory usage after 1st request:** 38.1 MB
 
 ### Spring Boot Native Image
 Removed the following from the Spring version due to lack of support while keeping the matching technologies in the Quarkus version:
@@ -83,4 +83,13 @@ target/io.quarkus.todospringquarkus.todoapplication
 - **Native Image Size:** 126 MB
 - **Native Image Boot Time:** 0.298 seconds 
 - **Boot RSS memory usage:** 137.8 MB
-- **1st request RSS memory usage:** 146.5 MB
+- **RSS memory usage after 1st request:** 146.5 MB
+
+### Native Image Results Summary
+| Metric | Quarkus | Spring Boot |
+| ------ | ------- | ----------- |
+| Native Image Build Time | 3m 20s | 7m 3s |
+| Native Image Size | 72 MB | 126 MB |
+| Native Image Boot Time | 0.091s | 0.298s |
+| Bootup RSS memory usage | 31.4 MB | 137.8 MB |
+| RSS memory usage after 1st request | 36.5 MB | 146.5 MB |
