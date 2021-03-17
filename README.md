@@ -27,6 +27,7 @@ To run as Quarkus:
 All stats reported below were using a developer desktop with the following specs:
 - 2018 MacBook Pro 15"
 - macOS 11.2.2
+- 16GB Memory
 - OpenJDK 11.0.2
 - GraalVM CE 21.0.0.r11
 
