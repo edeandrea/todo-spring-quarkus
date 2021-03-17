@@ -45,13 +45,6 @@ To run Quarkus Native Image once built:
 target/todo-spring-quarkus-0.0.1-SNAPSHOT-runner
 ```
 
-#### Quarkus Native Stats (includes technologies removed from the Spring version)
-- **Native Image Build Time:** 3 minutes 20 seconds
-- **Native Image Size:** 72 MB
-- **Native Image Boot Time:** 0.091 seconds
-- **Boot RSS memory usage:** 31.4 MB
-- **RSS memory usage after 1st request:** 38.1 MB
-
 ### Spring Boot Native Image
 Removed the following from the Spring version due to lack of support while keeping the matching technologies in the Quarkus version:
 - SpringDoc OpenAPI with Swagger UI
@@ -77,13 +70,6 @@ To run Spring Boot Native Image:
 ```shell
 target/io.quarkus.todospringquarkus.todoapplication
 ```
-
-#### Spring Boot Native Stats
-- **Native Image Build Time:** 7 minutes 3 seconds
-- **Native Image Size:** 126 MB
-- **Native Image Boot Time:** 0.298 seconds 
-- **Boot RSS memory usage:** 137.8 MB
-- **RSS memory usage after 1st request:** 146.5 MB
 
 ### Results Summary
 #### JVM - Equivalent functionality in both Quarkus & Spring
