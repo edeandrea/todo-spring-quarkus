@@ -85,7 +85,19 @@ target/io.quarkus.todospringquarkus.todoapplication
 - **Boot RSS memory usage:** 137.8 MB
 - **RSS memory usage after 1st request:** 146.5 MB
 
-### Native Image Results Summary
+### Results Summary
+**JVM - Equivalent functionality in both Quarkus & Spring**
+
+| Metric | Quarkus | Spring Boot |
+| ------ | ------- | ----------- |
+| Build Time | 18s | 10s |
+| Binary Size | 35 MB | 65 MB |
+| Boot Time | 2.286s | 6.7s |
+| Bootup RSS memory usage | 175.5 MB | 425.6 MB |
+| RSS memory usage after 1st request | 211.5 MB | 432 MB |
+
+**Native - Quarkus contains functionality removed from Spring due to lack of support**
+
 | Metric | Quarkus | Spring Boot |
 | ------ | ------- | ----------- |
 | Native Image Build Time | 3m 20s | 7m 3s |
