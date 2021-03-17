@@ -11,13 +11,14 @@ Run the PostgreSQL database:
 docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 --name tododb -e POSTGRES_USER=todo -e POSTGRES_PASSWORD=todo -e POSTGRES_DB=tododb -p 5432:5432 postgres:11.5
 ```
 
-To run as Spring Boot:
+## Run on JVM
+### Spring Boot:
 
 ```
 ./mvnw clean package spring-boot:run
 ```
 
-To run as Quarkus:
+### Quarkus:
 
 ```
 ./.mvnw clean spring-boot:run
