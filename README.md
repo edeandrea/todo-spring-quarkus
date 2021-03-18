@@ -12,13 +12,13 @@ docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 --name tod
 ```
 
 ## Run on JVM
-### Spring Boot:
+### Spring Boot
 
 ```
 ./mvnw clean package spring-boot:run
 ```
 
-### Quarkus:
+### Quarkus
 
 ```
 ./.mvnw clean spring-boot:run
@@ -93,6 +93,6 @@ Boot times were calculated using the average of 10 measurements using the [1stre
 | Native Image Build Time | 3m 20s | 7m 3s |
 | Native Image Size | 72 MB | 126 MB |
 | Native Image Boot Time | 0.074s | 0.284s |
-| Boot Time + 1st request | 0.24s | 0.482s |
+| Boot Time + 1st request | 0.238s | 0.482s |
 | Bootup RSS memory usage | 31.4 MB | 137.8 MB |
 | RSS memory usage after 1st request | 36.5 MB | 146.5 MB |
