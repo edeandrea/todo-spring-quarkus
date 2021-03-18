@@ -65,7 +65,7 @@ To run Spring Boot Native Image:
 target/io.quarkus.todospringquarkus.todoapplication
 ```
 
-### Results Summary
+## Results Summary
 All stats reported below were using a developer desktop with the following specs:
 - 2018 MacBook Pro 15"
 - macOS 11.2.2
@@ -75,7 +75,7 @@ All stats reported below were using a developer desktop with the following specs
 
 Boot times were calculated using the average of 10 measurements using the [1strequest.sh script](1strequest.sh) (`./1strequest.sh <command-to-start-application>` - i.e. `./1strequest.sh "java -jar target/quarkus-app/quarkus-run.jar"`).
 
-#### JVM - Equivalent functionality in both Quarkus & Spring
+### JVM - Equivalent functionality in both Quarkus & Spring
 
 | Metric | Quarkus | Spring Boot |
 | ------ | ------- | ----------- |
@@ -86,7 +86,7 @@ Boot times were calculated using the average of 10 measurements using the [1stre
 | Bootup RSS memory usage | 175.5 MB | 425.6 MB |
 | RSS memory usage after 1st request | 211.5 MB | 432 MB |
 
-#### Native - Quarkus contains functionality removed from Spring due to lack of support
+### Native - Quarkus contains functionality removed from Spring due to lack of support
 
 | Metric | Quarkus | Spring Boot |
 | ------ | ------- | ----------- |
