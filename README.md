@@ -25,13 +25,6 @@ docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 --name tod
 ```
 
 ## Native Image
-All stats reported below were using a developer desktop with the following specs:
-- 2018 MacBook Pro 15"
-- macOS 11.2.2
-- 16GB Memory
-- OpenJDK 11.0.2
-- GraalVM CE 21.0.0.r11
-
 ### Quarkus Native Image
 
 To build Quarkus Native Image:
@@ -73,13 +66,23 @@ target/io.quarkus.todospringquarkus.todoapplication
 ```
 
 ### Results Summary
+All stats reported below were using a developer desktop with the following specs:
+- 2018 MacBook Pro 15"
+- macOS 11.2.2
+- 16GB Memory
+- OpenJDK 11.0.2
+- GraalVM CE 21.0.0.r11
+
+Boot times were calculated using the average of 10 measurements using the [1strequest.sh script](1strequest.sh) (`./1strequest.sh <command-to-start-application>` - i.e. `./1strequest.sh "java -jar target/quarkus-app/quarkus-run.jar"`).
+
 #### JVM - Equivalent functionality in both Quarkus & Spring
 
 | Metric | Quarkus | Spring Boot |
 | ------ | ------- | ----------- |
 | Build Time | 18s | 10s |
 | Binary Size | 35 MB | 65 MB |
-| Boot Time | 2.286s | 6.7s |
+| Boot Time | 2.286s | 6.88s |
+| Boot Time + 1st request | 3.032s | 8.022s |
 | Bootup RSS memory usage | 175.5 MB | 425.6 MB |
 | RSS memory usage after 1st request | 211.5 MB | 432 MB |
 
@@ -89,6 +92,7 @@ target/io.quarkus.todospringquarkus.todoapplication
 | ------ | ------- | ----------- |
 | Native Image Build Time | 3m 20s | 7m 3s |
 | Native Image Size | 72 MB | 126 MB |
-| Native Image Boot Time | 0.091s | 0.298s |
+| Native Image Boot Time | 0.074s | 0.284s |
+| Boot Time + 1st request | 0.24s | 0.482s |
 | Bootup RSS memory usage | 31.4 MB | 137.8 MB |
 | RSS memory usage after 1st request | 36.5 MB | 146.5 MB |
