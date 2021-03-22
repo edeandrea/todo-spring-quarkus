@@ -14,6 +14,8 @@ COMMAND=$1
 NUM_ITERATIONS=1
 RSS=()
 TTFR=()
+TOTAL_RSS=0
+TOTAL_TTFR=0
 
 if [ "$#" -eq 2 ]; then
   NUM_ITERATIONS=$2
@@ -33,17 +35,10 @@ do
 
   TTFR[$i]=$((($(gdate +%s%N) - $ts)/1000000))
   RSS[$i]=`ps -o rss= -p $pid | sed 's/^ *//g'`
-  kill $pid
-  wait $pid 2> /dev/null
-done
-
-TOTAL_RSS=0
-TOTAL_TTFR=0
-
-for (( i=0; i<$NUM_ITERATIONS; i++))
-do
   TOTAL_RSS=$((TOTAL_RSS + RSS[$i]))
   TOTAL_TTFR=$((TOTAL_TTFR + TTFR[$i]))
+  kill $pid
+  wait $pid 2> /dev/null
 done
 
 echo
