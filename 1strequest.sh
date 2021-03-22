@@ -12,8 +12,6 @@
 
 COMMAND=$1
 NUM_ITERATIONS=1
-RSS=()
-TTFR=()
 TOTAL_RSS=0
 TOTAL_TTFR=0
 
@@ -33,10 +31,10 @@ do
     printf "."
   done
 
-  TTFR[$i]=$((($(gdate +%s%N) - $ts)/1000000))
-  RSS[$i]=`ps -o rss= -p $pid | sed 's/^ *//g'`
-  TOTAL_RSS=$((TOTAL_RSS + RSS[$i]))
-  TOTAL_TTFR=$((TOTAL_TTFR + TTFR[$i]))
+  TTFR=$((($(gdate +%s%N) - $ts)/1000000))
+  RSS=`ps -o rss= -p $pid | sed 's/^ *//g'`
+  TOTAL_RSS=$((TOTAL_RSS + RSS))
+  TOTAL_TTFR=$((TOTAL_TTFR + TTFR))
   kill $pid
   wait $pid 2> /dev/null
 done
