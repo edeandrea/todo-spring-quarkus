@@ -40,18 +40,8 @@ target/todo-spring-quarkus-0.0.1-SNAPSHOT-runner
 ```
 
 ### Spring Boot Native Image
-Removed the following from the Spring version due to lack of support while keeping the matching technologies in the Quarkus version:
-- SpringDoc OpenAPI with Swagger UI
-- Dekorate
-- Spring Boot DevTools
-- Micrometer Metrics/Prometheus
 
-Also needed to remove transactional support
-- Spring Native doesn't recognize the `@javax.transaction.Transactional` annotation
-- It also doesn't recognize `@org.springframework.transaction.annotation.Transactional`
-- Removed transactions completely for this exercise
 
-To build Spring Boot Native Image:
 1. Follow all the setup as documented in the [system requirements](https://docs.spring.io/spring-native/docs/current/reference/htmlsingle/#_system_requirements_2)
 1. Run
 
