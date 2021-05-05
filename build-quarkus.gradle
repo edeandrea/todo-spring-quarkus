@@ -1,13 +1,13 @@
 plugins {
 	id 'java'
-	id 'io.quarkus' version '1.12.0.Final'
+	id 'io.quarkus' version '1.13.3.Final'
 }
 
 apply from: 'build-common.gradle'
 
 ext {
-	quarkusVersion = '1.12.0.Final'
-	springVersion = '2.4.1'
+	quarkusVersion = '1.13.3.Final'
+	springVersion = '2.4.5'
 }
 
 compileJava {
