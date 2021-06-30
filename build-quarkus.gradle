@@ -1,13 +1,13 @@
 plugins {
 	id 'java'
-	id 'io.quarkus' version '1.13.3.Final'
+	id 'io.quarkus' version '2.0.0.Final'
 }
 
 apply from: 'build-common.gradle'
 
 ext {
-	quarkusVersion = '1.13.3.Final'
-	springVersion = '2.4.5'
+	quarkusVersion = '2.0.0.Final'
+	springVersion = '2.5.2'
 }
 
 compileJava {
@@ -30,17 +30,19 @@ dependencies {
 	implementation 'io.quarkus:quarkus-smallrye-openapi'
 	implementation 'io.quarkus:quarkus-smallrye-health'
 	implementation 'io.quarkus:quarkus-micrometer'
-	implementation 'io.quarkus:quarkus-kubernetes'
+	implementation 'io.quarkus:quarkus-openshift'
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 	runtimeOnly 'io.quarkus:quarkus-jdbc-postgresql'
 	testImplementation 'io.quarkus:quarkus-junit5'
+	testImplementation 'io.quarkus:quarkus-junit5-mockito'
 	testImplementation 'io.rest-assured:rest-assured'
+	testImplementation 'org.assertj:assertj-core'
 }
 
 quarkusBuild {
 	nativeArgs {
 		containerBuild = true
-		buildImage = "quay.io/quarkus/ubi-quarkus-native-image:20.2.0-java11"
+		buildImage = "quay.io/quarkus/ubi-quarkus-native-image:21.1.0-java11"
 	}
 }
 
