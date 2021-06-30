@@ -1,18 +1,26 @@
 package io.quarkus.todospringquarkus;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.GeneratedValue;  
-import javax.persistence.Entity;  
   
 @Entity
 @Table(name = "todo")
 public class TodoEntity {  
-      
-    @Id @GeneratedValue  
+    @Id @GeneratedValue
     private Long id;  
     private String title;  
     private boolean completed = false;
+
+    public TodoEntity() {
+    }
+
+    public TodoEntity(Long id, String title, boolean completed) {
+        this.id = id;
+        this.title = title;
+        this.completed = completed;
+    }
 
     public Long getId() {
         return this.id;
