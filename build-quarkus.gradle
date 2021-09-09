@@ -1,13 +1,13 @@
 plugins {
 	id 'java'
-	id 'io.quarkus' version '2.0.0.Final'
+	id 'io.quarkus' version '2.2.2.Final'
 }
 
 apply from: 'build-common.gradle'
 
 ext {
-	quarkusVersion = '2.0.0.Final'
-	springVersion = '2.5.2'
+	quarkusVersion = '2.2.2.Final'
+	springVersion = '2.5.4'
 }
 
 compileJava {
@@ -23,7 +23,7 @@ dependencies {
 	// This dependency is a hack for TodoApplication.java, which isn't required for Quarkus. Point of demo is to NOT have any code changes.
 	// It won't actually be included in the binary that gets built (compileOnly configuration)
 	compileOnly "org.springframework.boot:spring-boot-autoconfigure:$springVersion"
-	implementation enforcedPlatform("io.quarkus:quarkus-universe-bom:$quarkusVersion")
+	implementation enforcedPlatform("io.quarkus.platform:quarkus-bom:$quarkusVersion")
 	implementation 'io.quarkus:quarkus-spring-web'
 	implementation 'io.quarkus:quarkus-spring-data-jpa'
 	implementation 'io.quarkus:quarkus-spring-boot-properties'
