@@ -10,8 +10,8 @@
 		<java.version>11</java.version>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<spring.version>2.5.2</spring.version>
-		<quarkus.version>2.0.0.Final</quarkus.version>
+		<spring.version>2.5.4</spring.version>
+		<quarkus.version>2.2.2.Final</quarkus.version>
 		<compiler-plugin.version>3.8.1</compiler-plugin.version>
 		<surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
 	</properties>
@@ -119,8 +119,8 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<properties>
-				<quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
-				<quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
+				<quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+				<quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
 				<maven.compiler.parameters>true</maven.compiler.parameters>
 			</properties>
 			<dependencyManagement>
@@ -233,8 +233,8 @@
 				</property>
 			</activation>
 			<properties>
-				<quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
-				<quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
+				<quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+				<quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
 				<quarkus.package.type>native</quarkus.package.type>
 				<maven.compiler.parameters>true</maven.compiler.parameters>
 			</properties>
