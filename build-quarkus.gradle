@@ -1,13 +1,13 @@
 plugins {
 	id 'java'
-	id 'io.quarkus' version '2.4.1.Final'
+	id 'io.quarkus' version '2.6.3.Final'
 }
 
 apply from: 'build-common.gradle'
 
 ext {
-	quarkusVersion = '2.4.1.Final'
-	springVersion = '2.5.6'
+	quarkusVersion = '2.6.3.Final'
+	springVersion = '2.6.3'
 }
 
 compileJava {
@@ -32,6 +32,7 @@ dependencies {
 	implementation 'io.quarkus:quarkus-openshift'
 	implementation 'io.quarkus:quarkus-micrometer-registry-prometheus'
 	implementation 'io.quarkus:quarkus-jdbc-postgresql'
+	implementation 'io.quarkus:quarkus-resteasy-reactive-jackson'
 	testImplementation 'io.quarkus:quarkus-junit5'
 	testImplementation 'io.quarkus:quarkus-junit5-mockito'
 	testImplementation 'io.rest-assured:rest-assured'
@@ -41,7 +42,7 @@ dependencies {
 quarkusBuild {
 	nativeArgs {
 		containerBuild = true
-		buildImage = "quay.io/quarkus/ubi-quarkus-native-image:21.2.0-java11"
+		buildImage = "quay.io/quarkus/ubi-quarkus-native-image:21.3.0-java11"
 	}
 }
 
