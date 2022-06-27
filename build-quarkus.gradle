@@ -1,13 +1,13 @@
 plugins {
 	id 'java'
-	id 'io.quarkus' version '2.6.3.Final'
+	id 'io.quarkus' version '2.10.0.Final'
 }
 
 apply from: 'build-common.gradle'
 
 ext {
-	quarkusVersion = '2.6.3.Final'
-	springVersion = '2.6.3'
+	quarkusVersion = '2.10.0.Final'
+	springVersion = '2.7.1'
 }
 
 compileJava {
@@ -36,13 +36,13 @@ dependencies {
 	testImplementation 'io.quarkus:quarkus-junit5'
 	testImplementation 'io.quarkus:quarkus-junit5-mockito'
 	testImplementation 'io.rest-assured:rest-assured'
-	testImplementation 'org.assertj:assertj-core'
+	testImplementation 'org.assertj:assertj-core:3.23.1'
 }
 
 quarkusBuild {
 	nativeArgs {
 		containerBuild = true
-		buildImage = "quay.io/quarkus/ubi-quarkus-native-image:21.3.0-java11"
+		buildImage = "quay.io/quarkus/ubi-quarkus-native-image:22.1.0-java11"
 	}
 }
 
